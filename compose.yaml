@@ -1,0 +1,14 @@
+name: apadilla_tarea1
+services:
+  mysql:
+    container_name: apadilla_tarea1_mysql
+    image: bitnami/mysql:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=#Proyecto3
+      - MYSQL_USER=apadilla
+      - MYSQL_PASSWORD=#tarea1
+      - MYSQL_DATABASE=tarea1
+      - MYSQL_BIND_ADDRESS=0.0.0.0
+      - MYSQL_PORT_NUMBER=3306
+    ports:
+      - 3306:3306
