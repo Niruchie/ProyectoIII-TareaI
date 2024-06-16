@@ -5,19 +5,20 @@ import java.util.List;
 
 import cr.ac.ucenfotec.apadilla.logic.entity.producto.Producto;
 
-@Table(name = "categoria")
 @Entity
+@Table(name = "categoria")
+
 public class Categoria {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @Column(nullable = false, length = 100)
     private String nombre;
 
     @Column(length = 255)
     private String descripcion;
-
+    
     @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Producto> productos;
 
@@ -28,11 +29,11 @@ public class Categoria {
         this.descripcion = descripcion;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -50,13 +51,5 @@ public class Categoria {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
-    }
-
-    public List<Producto> getProductos() {
-        return productos;
-    }
-
-    public void setProductos(List<Producto> productos) {
-        this.productos = productos;
     }
 }

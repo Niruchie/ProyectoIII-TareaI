@@ -8,7 +8,7 @@ import jakarta.persistence.*;
 public class Producto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @Column(nullable = false, length = 100)
     private String nombre;
@@ -17,10 +17,10 @@ public class Producto {
     private String descripcion;
 
     @Column(nullable = false)
-    private double precio;
+    private Double precio;
 
     @Column(nullable = false)
-    private int cantidadEnStock;
+    private Long cantidadEnStock;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "categoria_id", nullable = false)
@@ -28,7 +28,7 @@ public class Producto {
 
     public Producto() {}
 
-    public Producto(String nombre, String descripcion, Double precio, Integer cantidadEnStock, Categoria categoria) {
+    public Producto(String nombre, String descripcion, Double precio, Long cantidadEnStock, Categoria categoria) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precio = precio;
@@ -36,11 +36,11 @@ public class Producto {
         this.categoria = categoria;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -64,15 +64,15 @@ public class Producto {
         return precio;
     }
 
-    public void setPrecio(double precio) {
+    public void setPrecio(Double precio) {
         this.precio = precio;
     }
 
-    public int getCantidadEnStock() {
+    public Long getCantidadEnStock() {
         return cantidadEnStock;
     }
 
-    public void setCantidadEnStock(int cantidadEnStock) {
+    public void setCantidadEnStock(Long cantidadEnStock) {
         this.cantidadEnStock = cantidadEnStock;
     }
 
