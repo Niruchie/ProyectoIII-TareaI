@@ -1,22 +1,31 @@
-package cr.ac.ucenfotec.apadilla.logic.entity.rol;
+package cr.ac.ucenfotec.apadilla.seeder;
 
 import org.springframework.context.ApplicationListener;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import cr.ac.ucenfotec.apadilla.logic.entity.rol.Role;
+import cr.ac.ucenfotec.apadilla.logic.entity.rol.RoleEnum;
+import cr.ac.ucenfotec.apadilla.logic.entity.rol.RoleRepository;
 import cr.ac.ucenfotec.apadilla.logic.entity.user.User;
 import cr.ac.ucenfotec.apadilla.logic.entity.user.UserRepository;
 
 import java.util.Optional;
 
 @Component
+@DependsOn("roleSeeder")
 public class AdminSeeder implements ApplicationListener<ContextRefreshedEvent> {
     private final RoleRepository roleRepository;
     private final UserRepository userRepository;
 
     private final PasswordEncoder passwordEncoder;
-
+    
+    @Override
+    public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
+    	this.createSuperAdministrator();
+    }
 
     public AdminSeeder(
             RoleRepository roleRepository,
@@ -28,11 +37,6 @@ public class AdminSeeder implements ApplicationListener<ContextRefreshedEvent> {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @Override
-    public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
-        this.createSuperAdministrator();
-    }
-
     private void createSuperAdministrator() {
         User superAdmin = new User();
         superAdmin.setName("Super");
@@ -40,14 +44,14 @@ public class AdminSeeder implements ApplicationListener<ContextRefreshedEvent> {
         superAdmin.setEmail("super.admin@gmail.com");
         superAdmin.setPassword("superadmin123");
 
-        Optional<Role> optionalRole = roleRepository.findByName(RoleEnum.SUPER_ADMIN);
+        Optional<Role> optionalRole = roleRepository.findByName(RoleEnum.SUPER_ADMIN_ROLE);
         Optional<User> optionalUser = userRepository.findByEmail(superAdmin.getEmail());
 
         if (optionalRole.isEmpty() || optionalUser.isPresent()) {
             return;
         }
 
-        var user = new User();
+        User user = new User();
         user.setName(superAdmin.getName());
         user.setLastname(superAdmin.getLastname());
         user.setEmail(superAdmin.getEmail());
